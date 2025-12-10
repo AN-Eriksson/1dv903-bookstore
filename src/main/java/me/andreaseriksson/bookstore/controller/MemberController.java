@@ -1,7 +1,9 @@
-package me.andreaseriksson.bookstore;
+package me.andreaseriksson.bookstore.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import me.andreaseriksson.bookstore.model.Member;
+import me.andreaseriksson.bookstore.repository.MemberRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

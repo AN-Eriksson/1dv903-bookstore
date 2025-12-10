@@ -1,4 +1,4 @@
-package me.andreaseriksson.bookstore;
+package me.andreaseriksson.bookstore.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;

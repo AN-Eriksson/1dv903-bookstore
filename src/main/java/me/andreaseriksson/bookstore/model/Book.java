@@ -1,4 +1,4 @@
-package me.andreaseriksson.bookstore;
+package me.andreaseriksson.bookstore.model;
 
 public class Book {
     private String isbn;

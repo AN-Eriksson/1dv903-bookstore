@@ -1,5 +1,6 @@
-package me.andreaseriksson.bookstore;
+package me.andreaseriksson.bookstore.repository;
 
+import me.andreaseriksson.bookstore.model.Book;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
