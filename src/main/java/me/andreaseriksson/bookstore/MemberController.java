@@ -1,5 +1,7 @@
 package me.andreaseriksson.bookstore;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,25 @@ public class MemberController {
     public String processRegister(@ModelAttribute Member member) {
         memberRepository.save(member);
         return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String showLoginForm(Model model) {
+        model.addAttribute("login", new Member());
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String processLogin(@ModelAttribute("login") Member login,
+                               HttpServletRequest request) {
+        Member found = memberRepository.findByEmail(login.getEmail());
+        if (found != null && found.getPassword() != null && found.getPassword().equals(login.getPassword())) {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("memberId", found.getUserid());
+            return "home";
+        } else {
+            return "redirect:/login";
+        }
     }
 
 }
