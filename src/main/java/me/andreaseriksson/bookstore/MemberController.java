@@ -38,12 +38,13 @@ public class MemberController {
 
     @PostMapping("/login")
     public String processLogin(@ModelAttribute("login") Member login,
-                               HttpServletRequest request) {
+                               HttpServletRequest request,
+                               Model model) {
         Member found = memberRepository.findByEmail(login.getEmail());
         if (found != null && found.getPassword() != null && found.getPassword().equals(login.getPassword())) {
             HttpSession session = request.getSession(true);
-            session.setAttribute("memberId", found.getUserid());
-            return "home";
+            session.setAttribute("memberName", found.getFname() + " " + found.getLname());
+            return "redirect:/";
         } else {
             return "redirect:/login";
         }

@@ -5,5 +5,9 @@
 </head>
 <body>
 <h1>Välkommen till bokhandeln</h1>
+
+<div th:if="${memberName}">
+    <p>Hej, <span th:text="${memberName}">Användarnamn</span>! Du är nu inloggad.</p>
+</div>
 </body>
 </html>
