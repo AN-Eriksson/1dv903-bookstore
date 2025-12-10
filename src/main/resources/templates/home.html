@@ -6,8 +6,16 @@
 <body>
 <h1>Välkommen till bokhandeln</h1>
 
+<div th:unless="${memberName}">
+    <a href="/register">Register</a>
+    <a href="/login">Login</a>
+</div>
+
 <div th:if="${memberName}">
     <p>Hej, <span th:text="${memberName}">Användarnamn</span>! Du är nu inloggad.</p>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logga ut</button>
+    </form>
 </div>
 </body>
 </html>
