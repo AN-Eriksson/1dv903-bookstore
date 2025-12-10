@@ -6,7 +6,7 @@
 <body>
 <h1>All Books</h1>
 <ul>
-    <li th:each="book : ${books}" th:text="${book.title}"></li>
+    <li th:each="book : ${books}" th:text="${book.author} +'-' + ${book.title}"></li>
 </ul>
 </body>
 </html>
