@@ -14,8 +14,8 @@ public class MemberRepository {
 
     public void save(Member member) {
         jdbcTemplate.update(
-                "INSERT INTO members (fname, lname, address, city, zip, phone, email, userid, password) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO members (fname, lname, address, city, zip, phone, email, password) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 member.getFname(),
                 member.getLname(),
                 member.getAddress(),
@@ -23,7 +23,6 @@ public class MemberRepository {
                 member.getZip(),
                 member.getPhone(),
                 member.getEmail(),
-                member.getUserid(),
                 member.getPassword()
         );
     }
