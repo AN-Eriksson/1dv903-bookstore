@@ -1,6 +1,5 @@
 package me.andreaseriksson.bookstore;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -29,26 +28,22 @@ public class MemberRepository {
     }
 
     public Member findByEmail(String email) {
-        try {
-            return jdbcTemplate.queryForObject(
-                    "SELECT userid, fname, lname, address, city, zip, phone, email, password FROM members WHERE email = ?",
-                    (rs, rowNum) -> {
-                        Member m = new Member();
-                        m.setUserid((rs.getInt("userid")));
-                        m.setFname(rs.getString("fname"));
-                        m.setLname(rs.getString("lname"));
-                        m.setAddress(rs.getString("address"));
-                        m.setCity(rs.getString("city"));
-                        m.setZip(rs.getInt("zip"));
-                        m.setPhone(rs.getString("phone"));
-                        m.setEmail(rs.getString("email"));
-                        m.setPassword(rs.getString("password"));
-                        return m;
-                    },
-                    email
-            );
-        } catch (EmptyResultDataAccessException ex) {
-            return null;
-        }
+        return jdbcTemplate.queryForObject(
+                "SELECT userid, fname, lname, address, city, zip, phone, email, password FROM members WHERE email = ?",
+                (rs, rowNum) -> {
+                    Member member = new Member();
+                    member.setUserid((rs.getInt("userid")));
+                    member.setFname(rs.getString("fname"));
+                    member.setLname(rs.getString("lname"));
+                    member.setAddress(rs.getString("address"));
+                    member.setCity(rs.getString("city"));
+                    member.setZip(rs.getInt("zip"));
+                    member.setPhone(rs.getString("phone"));
+                    member.setEmail(rs.getString("email"));
+                    member.setPassword(rs.getString("password"));
+                    return member;
+                },
+                email
+        );
     }
 }

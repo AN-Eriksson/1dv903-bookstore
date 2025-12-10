@@ -27,24 +27,27 @@ public class MemberController {
     @PostMapping("/register")
     public String processRegister(@ModelAttribute Member member) {
         memberRepository.save(member);
+
         return "redirect:/";
     }
 
     @GetMapping("/login")
     public String showLoginForm(Model model) {
         model.addAttribute("login", new Member());
+
         return "login";
     }
 
     @PostMapping("/login")
     public String processLogin(@ModelAttribute("login") Member login,
-                               HttpServletRequest request,
-                               Model model) {
+                               HttpServletRequest request) {
         Member found = memberRepository.findByEmail(login.getEmail());
+
         if (found != null && found.getPassword() != null && found.getPassword().equals(login.getPassword())) {
             HttpSession session = request.getSession(true);
             session.setAttribute("memberName", found.getFname() + " " + found.getLname());
             return "redirect:/";
+
         } else {
             return "redirect:/login";
         }
