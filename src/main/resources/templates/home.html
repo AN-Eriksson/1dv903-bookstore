@@ -17,5 +17,40 @@
         <button type="submit">Logga ut</button>
     </form>
 </div>
+
+<div th:if="${memberName}">
+    <form th:action="@{/filterBySubject}" method="post">
+        <label for="subject">Subject:</label>
+        <input id="subject" name="subject" type="text" th:value="${selectedSubject}"/>
+        <button type="submit">Filter by subject</button>
+    </form>
+</div>
+
+
+<div th:if="${hasResults}">
+    <table>
+        <thead>
+        <tr>
+            <th>ISBN</th>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Subject</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.isbn}">ISBN</td>
+            <td th:text="${book.author}">Author</td>
+            <td th:text="${book.title}">Title</td>
+            <td th:text="${book.price}">0.0</td>
+            <td th:text="${book.subject}">Subject</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:if="${!hasResults and memberName != null}">
+    <p>No books found for the selected subject.</p>
+</div>
 </body>
 </html>

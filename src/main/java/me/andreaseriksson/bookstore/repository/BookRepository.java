@@ -26,4 +26,18 @@ public class BookRepository {
                 )
         );
     }
+
+    public List<Book> findBySubject(String subject, int limit, int offset) {
+        String sql = "SELECT isbn, author, title, price, subject FROM books " +
+                "WHERE LOWER(subject) LIKE CONCAT(LOWER(?), '%') ORDER BY title LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql,
+                (rs, rowNum) -> new Book(
+                        rs.getString("isbn"),
+                        rs.getString("author"),
+                        rs.getString("title"),
+                        rs.getDouble("price"),
+                        rs.getString("subject")
+                ),
+                subject, limit, offset);
+    }
 }
