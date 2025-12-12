@@ -12,7 +12,7 @@
 </div>
 
 <div th:if="${memberName}">
-    <p>Hej, <span th:text="${memberName}">Användarnamn</span>! Du är nu inloggad.</p>
+    <p>Hi, <span th:text="${memberName}">memberName</span>!</p>
     <form th:action="@{/logout}" method="post">
         <button type="submit">Logga ut</button>
     </form>
@@ -39,24 +39,23 @@
         <input type="hidden" name="pageSize" th:value="${pageSize}"/>
         <button type="submit">Search by title</button>
     </form>
+
+    <form th:action="@{/}" method="get">
+        <input type="hidden" name="subject" th:value="${selectedSubject}"/>
+        <input type="hidden" name="author" th:value="${selectedAuthor}"/>
+        <input type="hidden" name="title" th:value="${selectedTitle}"/>
+        <input type="hidden" name="page" value="0"/>
+
+        <label for="globalPageSize">Results per page:</label>
+        <select id="globalPageSize" name="pageSize">
+            <option th:value="2" th:selected="${pageSize == 2}">2</option>
+            <option th:value="3" th:selected="${pageSize == 3}">3</option>
+            <option th:value="5" th:selected="${pageSize == 5}">5</option>
+            <option th:value="10" th:selected="${pageSize == 10}">10</option>
+        </select>
+        <button type="submit">Set</button>
+    </form>
 </div>
-
-<form th:action="@{/}" method="get">
-    <input type="hidden" name="subject" th:value="${selectedSubject}"/>
-    <input type="hidden" name="author" th:value="${selectedAuthor}"/>
-    <input type="hidden" name="title" th:value="${selectedTitle}"/>
-    <input type="hidden" name="page" value="0"/>
-
-    <label for="globalPageSize">Results per page:</label>
-    <select id="globalPageSize" name="pageSize">
-        <option th:value="2" th:selected="${pageSize == 2}">2</option>
-        <option th:value="3" th:selected="${pageSize == 3}">3</option>
-        <option th:value="5" th:selected="${pageSize == 5}">5</option>
-        <option th:value="10" th:selected="${pageSize == 10}">10</option>
-    </select>
-    <button type="submit">Set</button>
-</form>
-
 
 <div th:if="${hasResults}">
     <table>
@@ -86,7 +85,7 @@
             Previous
         </a>
 
-        <span> Page <span th:text="${page + 1}">1</span> </span>
+        <span th:text="${page + 1}">1</span>
 
         <a th:if="${books.size() == pageSize}"
            th:href="@{/(subject=${selectedSubject},author=${selectedAuthor},title=${selectedTitle},pageSize=${pageSize},page=${page + 1})}">
