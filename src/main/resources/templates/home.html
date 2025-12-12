@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bokhandel</title>
+    <title>Bookstore</title>
 </head>
 <body>
-<h1>Välkommen till bokhandeln</h1>
+<h1>Welcome to the bookstore</h1>
 
 <div th:unless="${memberName}">
     <a href="/register">Register</a>
@@ -19,48 +19,43 @@
 </div>
 
 <div th:if="${memberName}">
-    <form th:action="@{/searchBySubject}" method="post">
+    <form th:action="@{/}" method="get">
         <label for="subject">Subject:</label>
         <input id="subject" name="subject" type="text" th:value="${selectedSubject}"/>
-        <label>Results per page:
-            <select name="pageSize">
-                <option th:value="2" th:selected="${pageSize == 2}">2</option>
-                <option th:value="3" th:selected="${pageSize == 3}">3</option>
-                <option th:value="5" th:selected="${pageSize == 5}">5</option>
-                <option th:value="10" th:selected="${pageSize == 10}">10</option>
-            </select>
-        </label>
+        <input type="hidden" name="pageSize" th:value="${pageSize}"/>
         <button type="submit">Search by subject</button>
     </form>
 
-    <form th:action="@{/searchByAuthor}" method="post">
+    <form th:action="@{/}" method="get">
         <label for="author">Author:</label>
         <input id="author" name="author" type="text" th:value="${selectedAuthor}"/>
-        <label>Results per page:
-            <select name="pageSize">
-                <option th:value="2" th:selected="${pageSize == 2}">2</option>
-                <option th:value="3" th:selected="${pageSize == 3}">3</option>
-                <option th:value="5" th:selected="${pageSize == 5}">5</option>
-                <option th:value="10" th:selected="${pageSize == 10}">10</option>
-            </select>
-        </label>
+        <input type="hidden" name="pageSize" th:value="${pageSize}"/>
         <button type="submit">Search by author</button>
     </form>
 
-    <form th:action="@{/searchByTitle}" method="post">
+    <form th:action="@{/}" method="get">
         <label for="title">Title:</label>
         <input id="title" name="title" type="text" th:value="${selectedTitle}"/>
-        <label>Results per page:
-            <select name="pageSize">
-                <option th:value="2" th:selected="${pageSize == 2}">2</option>
-                <option th:value="3" th:selected="${pageSize == 3}">3</option>
-                <option th:value="5" th:selected="${pageSize == 5}">5</option>
-                <option th:value="10" th:selected="${pageSize == 10}">10</option>
-            </select>
-        </label>
+        <input type="hidden" name="pageSize" th:value="${pageSize}"/>
         <button type="submit">Search by title</button>
     </form>
 </div>
+
+<form th:action="@{/}" method="get">
+    <input type="hidden" name="subject" th:value="${selectedSubject}"/>
+    <input type="hidden" name="author" th:value="${selectedAuthor}"/>
+    <input type="hidden" name="title" th:value="${selectedTitle}"/>
+    <input type="hidden" name="page" value="0"/>
+
+    <label for="globalPageSize">Results per page:</label>
+    <select id="globalPageSize" name="pageSize">
+        <option th:value="2" th:selected="${pageSize == 2}">2</option>
+        <option th:value="3" th:selected="${pageSize == 3}">3</option>
+        <option th:value="5" th:selected="${pageSize == 5}">5</option>
+        <option th:value="10" th:selected="${pageSize == 10}">10</option>
+    </select>
+    <button type="submit">Set</button>
+</form>
 
 
 <div th:if="${hasResults}">
@@ -100,7 +95,7 @@
     </div>
 </div>
 <div th:if="${!hasResults and memberName != null}">
-    <p>No books found for the selected subject.</p>
+    <p>No books found for the selected search parameter.</p>
 </div>
 </body>
 </html>

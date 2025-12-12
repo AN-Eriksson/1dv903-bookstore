@@ -6,11 +6,9 @@ import me.andreaseriksson.bookstore.repository.BookRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class HomeController {
@@ -71,93 +69,6 @@ public class HomeController {
             return "home";
         }
 
-        return "home";
-    }
-
-    @PostMapping("/searchBySubject")
-    public String searchBySubject(@RequestParam String subject,
-                                  @RequestParam(required = false) Integer pageSize,
-                                  HttpSession session,
-                                  Model model) {
-        if (pageSize != null) {
-            session.setAttribute("pageSize", pageSize);
-        }
-        int effectivePageSize = (Integer) session.getAttribute("pageSize");
-
-        Object name = session.getAttribute("memberName");
-        if (name != null) model.addAttribute("memberName", name.toString());
-
-        if (subject == null || subject.trim().isEmpty()) {
-            model.addAttribute("hasResults", false);
-            model.addAttribute("books", List.of());
-            model.addAttribute("selectedSubject", "");
-            return "home";
-        }
-
-        List<Book> books = bookRepository.findBySubject(subject.trim(), effectivePageSize, 0);
-        model.addAttribute("books", books);
-        model.addAttribute("hasResults", !books.isEmpty());
-        model.addAttribute("selectedSubject", subject.trim());
-        model.addAttribute("page", 0);
-        model.addAttribute("pageSize", effectivePageSize);
-        return "home";
-    }
-
-    @PostMapping("/searchByAuthor")
-    public String searchByAuthor(@RequestParam String author,
-                                 @RequestParam(required = false) Integer pageSize,
-                                 HttpSession session,
-                                 Model model) {
-        if (pageSize != null) {
-            session.setAttribute("pageSize", pageSize);
-        }
-        int effectivePageSize = (Integer) session.getAttribute("pageSize");
-
-        Object name = session.getAttribute("memberName");
-        if (name != null) model.addAttribute("memberName", name.toString());
-
-        if (author == null || author.trim().isEmpty()) {
-            model.addAttribute("hasResults", false);
-            model.addAttribute("books", List.of());
-            model.addAttribute("selectedAuthor", "");
-            return "home";
-        }
-
-        List<Book> books = bookRepository.findByAuthor(author.trim(), effectivePageSize, 0);
-        model.addAttribute("books", books);
-        model.addAttribute("hasResults", !books.isEmpty());
-        model.addAttribute("selectedAuthor", author.trim());
-        model.addAttribute("page", 0);
-        model.addAttribute("pageSize", effectivePageSize);
-        return "home";
-    }
-
-    @PostMapping("/searchByTitle")
-    public String searchByTitle(@RequestParam String title,
-                                @RequestParam(required = false) Integer pageSize,
-                                HttpSession session,
-                                Model model) {
-        if (pageSize != null) {
-            session.setAttribute("pageSize", pageSize);
-        }
-        int effectivePageSize = (Integer) session.getAttribute("pageSize");
-
-        Object name = session.getAttribute("memberName");
-        if (name != null) model.addAttribute("memberName", name.toString());
-
-        if (title == null || title.trim().isEmpty()) {
-            model.addAttribute("hasResults", false);
-            model.addAttribute("books", List.of());
-            model.addAttribute("selectedTitle", "");
-            return "home";
-        }
-
-        List<Book> books = bookRepository.findByTitle(title.trim(), effectivePageSize, 0);
-        model.addAttribute("books", books);
-        model.addAttribute("hasResults", !books.isEmpty());
-        model.addAttribute("selectedTitle", title.trim());
-        model.addAttribute("page", 0);
-        model.addAttribute("pageSize", effectivePageSize);
         return "home";
     }
 }
