@@ -19,10 +19,46 @@
 </div>
 
 <div th:if="${memberName}">
-    <form th:action="@{/filterBySubject}" method="post">
+    <form th:action="@{/searchBySubject}" method="post">
         <label for="subject">Subject:</label>
         <input id="subject" name="subject" type="text" th:value="${selectedSubject}"/>
-        <button type="submit">Filter by subject</button>
+        <label>Results per page:
+            <select name="pageSize">
+                <option th:value="2" th:selected="${pageSize == 2}">2</option>
+                <option th:value="3" th:selected="${pageSize == 3}">3</option>
+                <option th:value="5" th:selected="${pageSize == 5}">5</option>
+                <option th:value="10" th:selected="${pageSize == 10}">10</option>
+            </select>
+        </label>
+        <button type="submit">Search by subject</button>
+    </form>
+
+    <form th:action="@{/searchByAuthor}" method="post">
+        <label for="author">Author:</label>
+        <input id="author" name="author" type="text" th:value="${selectedAuthor}"/>
+        <label>Results per page:
+            <select name="pageSize">
+                <option th:value="2" th:selected="${pageSize == 2}">2</option>
+                <option th:value="3" th:selected="${pageSize == 3}">3</option>
+                <option th:value="5" th:selected="${pageSize == 5}">5</option>
+                <option th:value="10" th:selected="${pageSize == 10}">10</option>
+            </select>
+        </label>
+        <button type="submit">Search by author</button>
+    </form>
+
+    <form th:action="@{/searchByTitle}" method="post">
+        <label for="title">Title:</label>
+        <input id="title" name="title" type="text" th:value="${selectedTitle}"/>
+        <label>Results per page:
+            <select name="pageSize">
+                <option th:value="2" th:selected="${pageSize == 2}">2</option>
+                <option th:value="3" th:selected="${pageSize == 3}">3</option>
+                <option th:value="5" th:selected="${pageSize == 5}">5</option>
+                <option th:value="10" th:selected="${pageSize == 10}">10</option>
+            </select>
+        </label>
+        <button type="submit">Search by title</button>
     </form>
 </div>
 
@@ -48,6 +84,20 @@
         </tr>
         </tbody>
     </table>
+
+    <div th:if="${page != null}">
+        <a th:if="${page > 0}"
+           th:href="@{/(subject=${selectedSubject},author=${selectedAuthor},title=${selectedTitle},pageSize=${pageSize},page=${page - 1})}">
+            Previous
+        </a>
+
+        <span> Page <span th:text="${page + 1}">1</span> </span>
+
+        <a th:if="${books.size() == pageSize}"
+           th:href="@{/(subject=${selectedSubject},author=${selectedAuthor},title=${selectedTitle},pageSize=${pageSize},page=${page + 1})}">
+            Next
+        </a>
+    </div>
 </div>
 <div th:if="${!hasResults and memberName != null}">
     <p>No books found for the selected subject.</p>

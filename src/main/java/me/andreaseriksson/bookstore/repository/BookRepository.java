@@ -40,4 +40,32 @@ public class BookRepository {
                 ),
                 subject, limit, offset);
     }
+
+    public List<Book> findByAuthor(String author, int limit, int offset) {
+        String sql = "SELECT isbn, author, title, price, subject FROM books " +
+                "WHERE LOWER(author) LIKE CONCAT(LOWER(?), '%') ORDER BY title LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql,
+                (rs, rowNum) -> new Book(
+                        rs.getString("isbn"),
+                        rs.getString("author"),
+                        rs.getString("title"),
+                        rs.getDouble("price"),
+                        rs.getString("subject")
+                ),
+                author, limit, offset);
+    }
+
+    public List<Book> findByTitle(String title, int limit, int offset) {
+        String sql = "SELECT isbn, author, title, price, subject FROM books " +
+                "WHERE LOWER(title) LIKE CONCAT(LOWER(?), '%') ORDER BY title LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql,
+                (rs, rowNum) -> new Book(
+                        rs.getString("isbn"),
+                        rs.getString("author"),
+                        rs.getString("title"),
+                        rs.getDouble("price"),
+                        rs.getString("subject")
+                ),
+                title, limit, offset);
+    }
 }
