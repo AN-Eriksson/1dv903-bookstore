@@ -26,15 +26,15 @@
     <tr th:each="item : ${cartItems}">
         <td th:text="${item.book.isbn}">ISBN</td>
         <td th:text="${item.book.title}">Book Title</td>
-        <td th:text="${item.book.price}">0.00</td>
-        <td th:text="${item.qty}">0</td>
-        <td th:text="${item.book.price * item.qty}">0.00</td>
+        <td th:text="'$' + ${item.book.price}">0.00</td>
+        <td th:text="${item.qty} + 'pcs'">0</td>
+        <td th:text="'$' + ${item.book.price * item.qty}">0.00</td>
     </tr>
     </tbody>
     <tfoot>
     <tr>
         <td colspan="4"><strong>Total</strong></td>
-        <td th:text="${cartTotal != null ? cartTotal : '—'}">0.00</td>
+        <td th:text="${cartTotal != null ? '$' + cartTotal : '—'}">0.00</td>
         <td>
             <form th:action="@{/cart/checkout}" method="post">
                 <button type="submit">Checkout</button>

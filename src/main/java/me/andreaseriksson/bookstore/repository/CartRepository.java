@@ -41,13 +41,13 @@ public class CartRepository {
                 sql,
                 (rs, rowNum) -> {
                     String isbn = rs.getString("isbn");
-                    String title = rs.getString("title");
                     String author = rs.getString("author");
+                    String title = rs.getString("title");
                     double price = rs.getDouble("price");
                     String subject = rs.getString("subject");
                     int qty = rs.getInt("qty");
 
-                    Book book = new Book(isbn, title, author, price, subject);
+                    Book book = new Book(isbn, author, title, price, subject);
                     return new CartItem(book, qty);
                 },
                 member.getUserid()
