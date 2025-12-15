@@ -16,7 +16,10 @@
 <div th:if="${memberName}">
     <p>Hi, <span th:text="${memberName}">memberName</span>!</p>
     <form th:action="@{/logout}" method="post">
-        <button type="submit">Logga ut</button>
+        <button type="submit">Log out</button>
+    </form>
+    <form th:action="@{/cart}" method="get">
+        <button type="submit">View my cart</button>
     </form>
 </div>
 

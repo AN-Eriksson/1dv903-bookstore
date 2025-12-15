@@ -15,8 +15,8 @@
 <table th:if="${!#lists.isEmpty(cartItems)}">
     <thead>
     <tr>
-        <th>Title</th>
         <th>ISBN</th>
+        <th>Title</th>
         <th>Price</th>
         <th>Quantity</th>
         <th>Line total</th>
@@ -24,8 +24,8 @@
     </thead>
     <tbody>
     <tr th:each="item : ${cartItems}">
-        <td th:text="${item.book.title}">Book Title</td>
         <td th:text="${item.book.isbn}">ISBN</td>
+        <td th:text="${item.book.title}">Book Title</td>
         <td th:text="${item.book.price}">0.00</td>
         <td th:text="${item.qty}">0</td>
         <td th:text="${item.book.price * item.qty}">0.00</td>
