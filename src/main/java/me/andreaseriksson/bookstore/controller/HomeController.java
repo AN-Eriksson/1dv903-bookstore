@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -80,11 +81,24 @@ public class HomeController {
     @PostMapping("/")
     public String addToCart(@RequestParam("isbn") String isbn,
                             @RequestParam("quantity") int quantity,
-                            HttpSession session) {
+                            @RequestParam(required = false) String subject,
+                            @RequestParam(required = false) String author,
+                            @RequestParam(required = false) String title,
+                            @RequestParam(defaultValue = "0") int page,
+                            @RequestParam(required = false) Integer pageSize,
+                            HttpSession session,
+                            RedirectAttributes redirectAttributes) {
 
         Member member = (Member) session.getAttribute("member");
 
         cartRepository.save(member, isbn, quantity);
+        redirectAttributes.addFlashAttribute("message", "Added to cart");
+
+        if (subject != null && !subject.isBlank()) redirectAttributes.addAttribute("subject", subject);
+        if (author != null && !author.isBlank()) redirectAttributes.addAttribute("author", author);
+        if (title != null && !title.isBlank()) redirectAttributes.addAttribute("title", title);
+        if (page > 0) redirectAttributes.addAttribute("page", page);
+        if (pageSize != null) redirectAttributes.addAttribute("pageSize", pageSize);
 
         return "redirect:/";
     }

@@ -4,6 +4,8 @@
     <title>Bookstore</title>
 </head>
 <body>
+<div th:if="${message}" th:text="${message}"></div>
+<div th:if="${error}" th:text="${error}"></div>
 <h1>Welcome to the bookstore</h1>
 
 <div th:unless="${memberName}">
@@ -78,8 +80,14 @@
             <td th:text="${book.subject}">Subject</td>
             <td>
                 <form th:action="@{/}" method="post">
-                    <label for="quantity"></label><input id="quantity" name="quantity" type="number" th:value="${selectedQuantity}" required/>
+                    <label for="quantity"></label>
+                    <input id="quantity" name="quantity" type="number" th:value="${selectedQuantity}" required/>
                     <input type="hidden" name="isbn" th:value="${book.isbn}" />
+                    <input type="hidden" name="subject" th:value="${selectedSubject}" />
+                    <input type="hidden" name="author" th:value="${selectedAuthor}" />
+                    <input type="hidden" name="title" th:value="${selectedTitle}" />
+                    <input type="hidden" name="page" th:value="${page != null ? page : 0}" />
+                    <input type="hidden" name="pageSize" th:if="${pageSize != null}" th:value="${pageSize}" />
                     <button type="submit">Add to cart</button>
                 </form>
             </td>
