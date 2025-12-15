@@ -47,6 +47,7 @@ public class MemberController {
 
         if (found != null && found.getPassword() != null && found.getPassword().equals(login.getPassword())) {
             HttpSession session = request.getSession(true);
+            session.setAttribute("member", found);
             session.setAttribute("memberName", found.getFname() + " " + found.getLname());
             return "redirect:/";
 

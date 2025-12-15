@@ -2,10 +2,13 @@ package me.andreaseriksson.bookstore.controller;
 
 import jakarta.servlet.http.HttpSession;
 import me.andreaseriksson.bookstore.model.Book;
+import me.andreaseriksson.bookstore.model.Member;
 import me.andreaseriksson.bookstore.repository.BookRepository;
+import me.andreaseriksson.bookstore.repository.CartRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -13,10 +16,12 @@ import java.util.List;
 @Controller
 public class HomeController {
     private final BookRepository bookRepository;
+    private final CartRepository cartRepository;
     private static final int DEFAULT_PAGE_SIZE = 5;
 
-    public HomeController(BookRepository bookRepository) {
+    public HomeController(BookRepository bookRepository, CartRepository cartRepository) {
         this.bookRepository = bookRepository;
+        this.cartRepository = cartRepository;
     }
 
     @GetMapping("/")
@@ -70,5 +75,17 @@ public class HomeController {
         }
 
         return "home";
+    }
+
+    @PostMapping("/")
+    public String addToCart(@RequestParam("isbn") String isbn,
+                            @RequestParam("quantity") int quantity,
+                            HttpSession session) {
+
+        Member member = (Member) session.getAttribute("member");
+
+        cartRepository.save(member, isbn, quantity);
+
+        return "redirect:/";
     }
 }

@@ -66,6 +66,7 @@
             <th>Title</th>
             <th>Price</th>
             <th>Subject</th>
+            <th>Add to cart</th>
         </tr>
         </thead>
         <tbody>
@@ -75,6 +76,13 @@
             <td th:text="${book.title}">Title</td>
             <td th:text="${book.price}">0.0</td>
             <td th:text="${book.subject}">Subject</td>
+            <td>
+                <form th:action="@{/}" method="post">
+                    <label for="quantity"></label><input id="quantity" name="quantity" type="number" th:value="${selectedQuantity}" required/>
+                    <input type="hidden" name="isbn" th:value="${book.isbn}" />
+                    <button type="submit">Add to cart</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
