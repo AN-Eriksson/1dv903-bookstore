@@ -89,6 +89,10 @@ public class HomeController {
                             HttpSession session,
                             RedirectAttributes redirectAttributes) {
 
+        if (quantity < 1) {
+            throw new IllegalArgumentException();
+        }
+
         Member member = (Member) session.getAttribute("member");
 
         cartRepository.save(member, isbn, quantity);

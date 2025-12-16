@@ -31,8 +31,7 @@ public class CartRepository {
     }
 
     public List<CartItem> getCartContents(Member member) {
-        String sql = ""
-                + "SELECT b.isbn AS isbn, b.title AS title, b.author AS author, b.price AS price, b.subject AS subject, c.qty AS qty "
+        String sql = "SELECT b.isbn AS isbn, b.title AS title, b.author AS author, b.price AS price, b.subject AS subject, c.qty AS qty "
                 + "FROM cart c "
                 + "JOIN books b ON b.isbn = c.isbn "
                 + "WHERE c.userid = ?";
