@@ -3,9 +3,8 @@ package me.andreaseriksson.bookstore.controller;
 import jakarta.servlet.http.HttpSession;
 import me.andreaseriksson.bookstore.model.Book;
 import me.andreaseriksson.bookstore.model.Member;
-import me.andreaseriksson.bookstore.repository.BookRepository;
-import me.andreaseriksson.bookstore.repository.CartRepository;
 import me.andreaseriksson.bookstore.service.BookService;
+import me.andreaseriksson.bookstore.service.CartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +17,10 @@ import java.util.List;
 @Controller
 public class HomeController {
     private final BookService bookService;
-    private final CartRepository cartService;
+    private final CartService cartService;
     private static final int DEFAULT_PAGE_SIZE = 5;
 
-    public HomeController(BookService bookService, CartRepository cartService) {
+    public HomeController(BookService bookService, CartService cartService) {
         this.bookService = bookService;
         this.cartService = cartService;
     }
@@ -32,7 +31,8 @@ public class HomeController {
                        @RequestParam(required = false) String title,
                        @RequestParam(defaultValue = "0") int page,
                        @RequestParam(required = false) Integer pageSize,
-                       HttpSession session, Model model) {
+                       HttpSession session,
+                       Model model) {
 
         if (page < 0) page = 0;
 
