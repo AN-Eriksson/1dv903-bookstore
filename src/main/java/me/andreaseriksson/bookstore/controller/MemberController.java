@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import me.andreaseriksson.bookstore.model.Member;
 import me.andreaseriksson.bookstore.repository.MemberRepository;
+import me.andreaseriksson.bookstore.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class MemberController {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
-    public MemberController(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
     }
 
     @GetMapping("/register")
@@ -28,7 +29,7 @@ public class MemberController {
 
     @PostMapping("/register")
     public String processRegister(@ModelAttribute Member member) {
-        memberRepository.save(member);
+        memberService.save(member);
 
         return "redirect:/";
     }
@@ -43,7 +44,7 @@ public class MemberController {
     @PostMapping("/login")
     public String processLogin(@ModelAttribute("login") Member login,
                                HttpServletRequest request) {
-        Member found = memberRepository.findByEmail(login.getEmail());
+        Member found = memberService.findByEmail(login.getEmail());
 
         if (found != null && found.getPassword() != null && found.getPassword().equals(login.getPassword())) {
             HttpSession session = request.getSession(true);
