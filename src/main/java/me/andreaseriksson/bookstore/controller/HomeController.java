@@ -5,6 +5,7 @@ import me.andreaseriksson.bookstore.model.Book;
 import me.andreaseriksson.bookstore.model.Member;
 import me.andreaseriksson.bookstore.repository.BookRepository;
 import me.andreaseriksson.bookstore.repository.CartRepository;
+import me.andreaseriksson.bookstore.service.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +17,13 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-    private final BookRepository bookRepository;
-    private final CartRepository cartRepository;
+    private final BookService bookService;
+    private final CartRepository cartService;
     private static final int DEFAULT_PAGE_SIZE = 5;
 
-    public HomeController(BookRepository bookRepository, CartRepository cartRepository) {
-        this.bookRepository = bookRepository;
-        this.cartRepository = cartRepository;
+    public HomeController(BookService bookService, CartRepository cartService) {
+        this.bookService = bookService;
+        this.cartService = cartService;
     }
 
     @GetMapping("/")
@@ -54,26 +55,9 @@ public class HomeController {
 
         int offset = page * effectivePageSize;
 
-        if (subject != null && !subject.trim().isEmpty()) {
-            List<Book> books = bookRepository.findBySubject(subject.trim(), effectivePageSize, offset);
-            model.addAttribute("books", books);
-            model.addAttribute("hasResults", !books.isEmpty());
-            return "home";
-        }
-
-        if (author != null && !author.trim().isEmpty()) {
-            List<Book> books = bookRepository.findByAuthor(author.trim(), effectivePageSize, offset);
-            model.addAttribute("books", books);
-            model.addAttribute("hasResults", !books.isEmpty());
-            return "home";
-        }
-
-        if (title != null && !title.trim().isEmpty()) {
-            List<Book> books = bookRepository.findByTitle(title.trim(), effectivePageSize, offset);
-            model.addAttribute("books", books);
-            model.addAttribute("hasResults", !books.isEmpty());
-            return "home";
-        }
+        List<Book> books = bookService.search(subject, author, title, effectivePageSize, offset);
+        model.addAttribute("books", books);
+        model.addAttribute("hasResults", !books.isEmpty());
 
         return "home";
     }
@@ -95,7 +79,7 @@ public class HomeController {
 
         Member member = (Member) session.getAttribute("member");
 
-        cartRepository.save(member, isbn, quantity);
+        cartService.save(member, isbn, quantity);
         redirectAttributes.addFlashAttribute("message", "Added to cart");
 
         if (subject != null && !subject.isBlank()) redirectAttributes.addAttribute("subject", subject);

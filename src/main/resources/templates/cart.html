@@ -36,7 +36,7 @@
         <td colspan="4"><strong>Total</strong></td>
         <td th:text="${cartTotal != null ? '$' + cartTotal : '—'}">0.00</td>
         <td>
-            <form th:action="@{/cart/checkout}" method="post">
+            <form th:action="@{/checkout}" method="post">
                 <button type="submit">Checkout</button>
             </form>
         </td>

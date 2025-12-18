@@ -3,12 +3,9 @@ package me.andreaseriksson.bookstore.repository;
 import me.andreaseriksson.bookstore.model.Book;
 import me.andreaseriksson.bookstore.model.CartItem;
 import me.andreaseriksson.bookstore.model.Member;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 @Repository
