@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
@@ -6,46 +5,42 @@
 </head>
 <body>
 
-<h1 th:text="${ono}">Order ID</h1>
-<p th:text="${name}">Name</p>
-<p th:utext="${address}">Address</p>
-<!--<h1>Your Cart</h1>-->
+<h1>Order Details</h1>
+<h2 th:text="|Invoice for Order no. ${order.ono}|">Order ID</h2>
 
-<!--<div th:if="${#lists.isEmpty(cartItems)}">-->
-<!--    <p>Your cart is empty.</p>-->
-<!--    <a th:href="@{/}">Continue shopping</a>-->
-<!--</div>-->
 
-<!--<table th:if="${!#lists.isEmpty(cartItems)}">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th>ISBN</th>-->
-<!--        <th>Title</th>-->
-<!--        <th>Price</th>-->
-<!--        <th>Quantity</th>-->
-<!--        <th>Line total</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr th:each="item : ${cartItems}">-->
-<!--        <td th:text="${item.book.isbn}">ISBN</td>-->
-<!--        <td th:text="${item.book.title}">Book Title</td>-->
-<!--        <td th:text="'$' + ${item.book.price}">0.00</td>-->
-<!--        <td th:text="${item.qty} + 'pcs'">0</td>-->
-<!--        <td th:text="'$' + ${item.book.price * item.qty}">0.00</td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--    <tfoot>-->
-<!--    <tr>-->
-<!--        <td colspan="4"><strong>Total</strong></td>-->
-<!--        <td th:text="${cartTotal != null ? '$' + cartTotal : '—'}">0.00</td>-->
-<!--        <td>-->
-<!--            <form th:action="@{/checkout}" method="post">-->
-<!--                <button type="submit">Checkout</button>-->
-<!--            </form>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--    </tfoot>-->
-<!--</table>-->
+<h2>Shipping Address</h2>
+<p th:text="${order.name}">Name</p>
+<p th:utext="${order.address}">Address</p>
+
+<h2>Books</h2>
+
+<table th:if="${!#lists.isEmpty(order.lines)}">
+    <thead>
+    <tr>
+        <th>ISBN</th>
+        <th>Title / Description</th>
+        <th>Qty</th>
+        <th>Unit Price</th>
+        <th>Line Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="line : ${order.lines}">
+        <td th:text="${line.isbn}">ISBN</td>
+        <td th:text="${line.title}">Title</td>
+        <td th:text="${line.qty}">0</td>
+        <td th:text="${line.unitPrice}">0.00</td>
+        <td th:text="${line.lineTotal}">0.00</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4">Total:</td>
+        <td th:text="${order.total()}">0.00</td>
+    </tr>
+    </tfoot>
+</table>
+
 </body>
 </html>
