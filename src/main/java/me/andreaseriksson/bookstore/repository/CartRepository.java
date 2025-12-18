@@ -49,4 +49,8 @@ public class CartRepository {
                 member.getUserid()
         );
     }
+
+    public void clearCart(Member member) {
+        jdbcTemplate.update("DELETE FROM cart WHERE userid = ?", member.getUserid());
+    }
 }

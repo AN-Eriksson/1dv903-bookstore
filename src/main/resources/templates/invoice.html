@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Cart</title>
+</head>
+<body>
+
+<h1 th:text="${ono}">Order ID</h1>
+<p th:text="${name}">Name</p>
+<p th:utext="${address}">Address</p>
+<!--<h1>Your Cart</h1>-->
+
+<!--<div th:if="${#lists.isEmpty(cartItems)}">-->
+<!--    <p>Your cart is empty.</p>-->
+<!--    <a th:href="@{/}">Continue shopping</a>-->
+<!--</div>-->
+
+<!--<table th:if="${!#lists.isEmpty(cartItems)}">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>ISBN</th>-->
+<!--        <th>Title</th>-->
+<!--        <th>Price</th>-->
+<!--        <th>Quantity</th>-->
+<!--        <th>Line total</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="item : ${cartItems}">-->
+<!--        <td th:text="${item.book.isbn}">ISBN</td>-->
+<!--        <td th:text="${item.book.title}">Book Title</td>-->
+<!--        <td th:text="'$' + ${item.book.price}">0.00</td>-->
+<!--        <td th:text="${item.qty} + 'pcs'">0</td>-->
+<!--        <td th:text="'$' + ${item.book.price * item.qty}">0.00</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--    <tfoot>-->
+<!--    <tr>-->
+<!--        <td colspan="4"><strong>Total</strong></td>-->
+<!--        <td th:text="${cartTotal != null ? '$' + cartTotal : '—'}">0.00</td>-->
+<!--        <td>-->
+<!--            <form th:action="@{/checkout}" method="post">-->
+<!--                <button type="submit">Checkout</button>-->
+<!--            </form>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    </tfoot>-->
+<!--</table>-->
+</body>
+</html>

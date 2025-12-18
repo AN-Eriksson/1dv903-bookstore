@@ -42,6 +42,8 @@ public class CheckoutService {
             );
         }
 
+        cartService.clearCart(member);
+
         return ono;
     }
 }

@@ -29,4 +29,8 @@ public class CartService {
         }
         return total;
     }
+
+    public void clearCart(Member member) {
+        cartRepository.clearCart(member);
+    }
 }

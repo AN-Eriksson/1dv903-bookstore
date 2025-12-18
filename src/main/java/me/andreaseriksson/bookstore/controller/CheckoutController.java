@@ -22,8 +22,14 @@ public class CheckoutController {
     ) {
 
         Member member = (Member) session.getAttribute("member");
+        String name = member.getFname() + " " + member.getLname();
+        String address = member.getAddress() + "<br/>" + member.getCity() + ", " + member.getZip();
 
         int ono = checkoutService.placeOrder(member);
+
+        model.addAttribute("ono", ono);
+        model.addAttribute("name", name);
+        model.addAttribute("address", address);
         return "invoice";
     }
 
