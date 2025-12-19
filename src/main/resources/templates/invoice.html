@@ -31,14 +31,14 @@
         <td th:text="${line.isbn}">ISBN</td>
         <td th:text="${line.title}">Title</td>
         <td th:text="${line.qty}">0</td>
-        <td th:text="${line.unitPrice}">0.00</td>
-        <td th:text="${line.lineTotal}">0.00</td>
+        <td th:text="'$' + ${line.unitPrice}">0.00</td>
+        <td th:text="'$' + ${line.lineTotal}">0.00</td>
     </tr>
     </tbody>
     <tfoot>
     <tr>
         <td colspan="4">Order Total:</td>
-        <td th:text="${order.total()}">0.00</td>
+        <td th:text="'$' + ${order.total()}">0.00</td>
     </tr>
     </tfoot>
 </table>
