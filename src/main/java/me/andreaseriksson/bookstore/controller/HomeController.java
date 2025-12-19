@@ -78,9 +78,17 @@ public class HomeController {
         }
 
         Member member = (Member) session.getAttribute("member");
+        if (member == null) {
+            redirectAttributes.addFlashAttribute("error", "Please log in to add items to your cart");
+            return "redirect:/login";
+        }
 
-        cartService.save(member, isbn, quantity);
-        redirectAttributes.addFlashAttribute("message", "Added to cart");
+        try {
+            cartService.save(member, isbn, quantity);
+            redirectAttributes.addFlashAttribute("message", "Added to cart");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Add to cart failed - please try again later!");
+        }
 
         if (subject != null && !subject.isBlank()) redirectAttributes.addAttribute("subject", subject);
         if (author != null && !author.isBlank()) redirectAttributes.addAttribute("author", author);

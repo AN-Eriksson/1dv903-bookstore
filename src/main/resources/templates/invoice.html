@@ -4,7 +4,8 @@
     <title>Cart</title>
 </head>
 <body>
-
+<div th:if="${message}" th:text="${message}"></div>
+<div th:if="${error}" th:text="${error}"></div>
 <h1>Order Details</h1>
 <h2 th:text="|Invoice for Order no. ${order.ono}|">Order ID</h2>
 
