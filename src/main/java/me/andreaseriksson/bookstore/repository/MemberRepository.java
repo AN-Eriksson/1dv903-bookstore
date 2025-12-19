@@ -4,6 +4,9 @@ import me.andreaseriksson.bookstore.model.Member;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public class MemberRepository {
 
@@ -28,8 +31,8 @@ public class MemberRepository {
         );
     }
 
-    public Member findByEmail(String email) {
-        return jdbcTemplate.queryForObject(
+    public Optional<Member> findByEmail(String email) {
+        List<Member> results = jdbcTemplate.query(
                 "SELECT userid, fname, lname, address, city, zip, phone, email, password FROM members WHERE email = ?",
                 (rs, rowNum) -> {
                     Member member = new Member();
@@ -46,5 +49,6 @@ public class MemberRepository {
                 },
                 email
         );
+        return results.stream().findFirst();
     }
 }
