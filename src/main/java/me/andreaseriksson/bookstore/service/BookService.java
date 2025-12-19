@@ -27,4 +27,8 @@ public class BookService {
         }
         return Collections.emptyList();
     }
+
+    public List<String> findAllSubjects() {
+        return bookRepository.findAllSubjects();
+    }
 }

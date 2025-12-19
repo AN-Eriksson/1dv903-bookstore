@@ -34,6 +34,16 @@ public class HomeController {
                        HttpSession session,
                        Model model) {
 
+        List<String> subjects = null;
+        try {
+            subjects = bookService.findAllSubjects();
+            model.addAttribute("subjects", subjects);
+        } catch (Exception e) {
+            model.addAttribute("error", "Failed to load subjects, please try refreshing the page");
+        }
+
+        model.addAttribute("selectedSubject", subject);
+
         if (page < 0) page = 0;
 
         Integer sessionPageSize = (Integer) session.getAttribute("pageSize");

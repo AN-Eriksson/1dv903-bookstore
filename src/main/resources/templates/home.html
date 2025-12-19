@@ -26,9 +26,16 @@
 <div th:if="${memberName}">
     <form th:action="@{/}" method="get">
         <label for="subject">Subject:</label>
-        <input id="subject" name="subject" type="text" th:value="${selectedSubject}"/>
+        <select id="subject" name="subject">
+            <option value="" th:selected="${selectedSubject == null || selectedSubject == ''}">All</option>
+            <option th:each="s : ${subjects}"
+                    th:value="${s}"
+                    th:text="${s}"
+                    th:selected="${s == selectedSubject}">
+            </option>
+        </select>
         <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-        <button type="submit">Search by subject</button>
+        <button type="submit">Filter by subject</button>
     </form>
 
     <form th:action="@{/}" method="get">

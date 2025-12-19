@@ -68,4 +68,9 @@ public class BookRepository {
                 ),
                 title, limit, offset);
     }
+
+    public List<String> findAllSubjects() {
+        String sql = "SELECT DISTINCT subject FROM books WHERE subject IS NOT NULL ORDER BY subject";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("subject"));
+    }
 }
