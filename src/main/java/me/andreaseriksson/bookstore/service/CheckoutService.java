@@ -58,7 +58,8 @@ public class CheckoutService {
 
         String name = member.getFname() + " " + member.getLname();
         String address = member.getAddress() + "<br/>" + member.getCity() + ", " + member.getZip();
+        LocalDate deliveryDate = created.plusDays(7);
 
-        return new OrderDto(ono, created, name, address, lines, total);
+        return new OrderDto(ono, created, name, address, lines, total, deliveryDate);
     }
 }

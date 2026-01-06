@@ -9,5 +9,6 @@ public record OrderDto(
         String name,
         String address,
         List<OrderLineDto> lines,
-        double total
+        double total,
+        LocalDate deliveryDate
 ) { }
