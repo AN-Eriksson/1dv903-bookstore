@@ -15,8 +15,8 @@ public class BookRepository {
     }
 
     public List<Book> findAll() {
-        return jdbcTemplate.query(
-                "SELECT isbn, author, title, price, subject FROM books",
+        String sql = "SELECT isbn, author, title, price, subject FROM books";
+        return jdbcTemplate.query(sql,
                 (resultSet, rowNumber) -> new Book(
                         resultSet.getString("isbn"),
                         resultSet.getString("author"),

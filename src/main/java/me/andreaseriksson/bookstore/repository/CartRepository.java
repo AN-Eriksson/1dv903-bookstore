@@ -18,8 +18,8 @@ public class CartRepository {
     }
 
     public void save(Member member, String isbn, int qty) {
-        jdbcTemplate.update(
-                "INSERT INTO cart (userid, isbn, qty) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE qty = qty + ?",
+        String sql = "INSERT INTO cart (userid, isbn, qty) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE qty = qty + ?";
+        jdbcTemplate.update(sql,
                 member.getUserid(),
                 isbn,
                 qty,
@@ -51,6 +51,7 @@ public class CartRepository {
     }
 
     public void clearCart(Member member) {
-        jdbcTemplate.update("DELETE FROM cart WHERE userid = ?", member.getUserid());
+        String sql = "DELETE FROM cart WHERE userid = ?";
+        jdbcTemplate.update(sql, member.getUserid());
     }
 }

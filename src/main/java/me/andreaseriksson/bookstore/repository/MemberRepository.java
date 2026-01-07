@@ -17,9 +17,9 @@ public class MemberRepository {
     }
 
     public void save(Member member) {
-        jdbcTemplate.update(
-                "INSERT INTO members (fname, lname, address, city, zip, phone, email, password) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        String sql = "INSERT INTO members (fname, lname, address, city, zip, phone, email, password) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql,
                 member.getFname(),
                 member.getLname(),
                 member.getAddress(),
@@ -32,8 +32,8 @@ public class MemberRepository {
     }
 
     public Optional<Member> findByEmail(String email) {
-        List<Member> results = jdbcTemplate.query(
-                "SELECT userid, fname, lname, address, city, zip, phone, email, password FROM members WHERE email = ?",
+        String sql = "SELECT userid, fname, lname, address, city, zip, phone, email, password FROM members WHERE email = ?";
+        List<Member> results = jdbcTemplate.query(sql,
                 (rs, rowNum) -> {
                     Member member = new Member();
                     member.setUserid((rs.getInt("userid")));
