@@ -11,4 +11,5 @@ public record OrderDto(
         List<OrderLineDto> lines,
         double total,
         LocalDate deliveryDate
-) { }
+) {
+}
